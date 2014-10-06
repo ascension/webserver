@@ -71,6 +71,9 @@ var twoWeeksInSeconds = 1209600;
 app.use(express.static(path.join(__dirname, '/build'), { maxAge: twoWeeksInSeconds * 1000 }));
 
 app.use(function(req, res, next) {
+    res.send(503, 'Moneypot down for unexpected maintenance. We will be back an in hour or so. ');
+    return;
+
     var sessionId = req.cookies.id;
 
     if (!sessionId) {
