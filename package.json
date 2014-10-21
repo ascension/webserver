@@ -1,6 +1,6 @@
 {
   "name": "MoneyPot",
-  "version": "0.0.1",
+  "version": "0.0.1-18",
   "engines": {
     "node": "~0.10.26"
   },
@@ -30,5 +30,6 @@
   },
   "scripts": {
     "start": "node server.js --use_strict"
-  }
+  },
+  "subdomain": "moneypot"
 }
