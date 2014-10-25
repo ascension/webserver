@@ -128,6 +128,8 @@ module.exports = function(app) {
     app.post('/sent-recover', user.sendPasswordRecover);
     app.post('/reset-password', restrict, user.resetPassword);
     app.post('/add-email', restrict, user.addEmail);
+    app.post('/enable-2fa', restrict, user.enableMfa);
+    app.post('/disable-2fa', restrict, user.disableMfa);
     app.post('/withdraw-request', restrict, user.handleWithdrawRequest);
     app.post('/support', restrict, contact('support'));
     app.post('/contact', contact('contact'));

@@ -401,6 +401,56 @@ exports.addEmail = function(req, res, next) {
     });
 };
 
+exports.enableMfa = function(req, res, next) {
+    var user   = req.user,
+        secret = user.mfa_secret;
+    assert(user && secret);
+
+    if (user.mfa_enabled) {
+        res.redirect('/security?err=2FA is already enabled');
+    }
+
+    var otp      = req.body.otp,
+        expected = speakeasy.totp({key: secret, encoding: 'base32'});
+    if (otp == expected) {
+        database.updateMfaEnabled(user.id, true, function(err) {
+            if (err) return next(new Error('Unable to update 2FA status got ' + err));
+            res.redirect('/security');
+        })
+    } else {
+        res.redirect('/security?err=invalid%20one-time%20password');
+    }
+}
+
+exports.disableMfa = function(req, res, next) {
+    var user   = req.user,
+        secret = user.mfa_secret;
+    assert(user && secret);
+
+    if (!user.mfa_enabled) {
+        res.redirect('/security?err=2FA is not enabled');
+    }
+
+    var otp      = req.body.otp,
+        expected = speakeasy.totp({key: secret, encoding: 'base32'});
+    if (otp == expected) {
+        var tasks = [
+            function(callback) {
+                database.updateMfaEnabled(user.id, false, callback);
+            },
+            function(callback) {
+                database.updateMfaSecret(user.id, '', callback);
+            }
+        ]
+        async.parallel(tasks, function(err) {
+            if (err) return next(err);
+            res.redirect('/security');
+        })
+    } else {
+        res.redirect('/security?err=invalid%20one-time%20password');
+    }
+}
+
 exports.sendPasswordRecover = function(req, res, next) {
     var username = req.body.username;
     if (!username) return res.redirect('forgot-password');
