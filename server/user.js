@@ -7,6 +7,8 @@ var lib = require('./lib');
 var database = require('./database');
 var withdraw = require('./withdraw');
 var sendEmail = require('./sendEmail');
+var speakeasy = require('speakeasy');
+var qr = require('qr-image');
 
 var sessionOptions = {
         httpOnly: true,
@@ -313,7 +315,17 @@ exports.security = function(req, res, next) {
     var user = req.user;
     assert(user);
 
-    res.render('security', {user: user});
+    if (!user.mfa_secret) {
+        user.mfa_secret = speakeasy.generate_key({length: 32}).base32;
+        database.updateMfaSecret(user.id, user.mfa_secret, function(err) {
+            if (err) return next(new Error('Unable to update 2FA secret got ' + err));
+        });
+    }
+
+    var qrUri = 'otpauth://totp/MoneyPot:' + encodeURIComponent(user.username) + '?secret=' + user.mfa_secret + '&issuer=MoneyPot',
+        qrSvg = qr.imageSync(qrUri, {type: 'svg'});
+
+    res.render('security', {user: user, qr_svg: qrSvg});
 }
 
 exports.resetPassword = function(req, res, next) {
@@ -430,7 +442,7 @@ exports.resetForm = function(req, res, next) {
                 return res.render('404');
             return next(new Error('resetForm: Unable to get user recover id got ' + err));
         }
-        res.render('reset-password', { username: user.username, recoverId: recoverId });
+        res.render('reset-password', { user: user, recoverId: recoverId });
     });
 };
 
