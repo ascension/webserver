@@ -183,6 +183,24 @@ exports.changeUserPassword = function(userId, password, callback) {
     });
 };
 
+exports.updateMfaEnabled = function(userId, enabled, callback) {
+    assert(userId && typeof enabled != 'undefined');
+    query('UPDATE users SET mfa_enabled = $1 WHERE id = $2', [enabled, userId], function(err, res) {
+        if (err) return callback(err);
+        assert(res.rowCount === 1);
+        callback(null);
+    });
+}
+
+exports.updateMfaSecret = function(userId, secret, callback) {
+    assert(userId && typeof secret != 'undefined');
+    query('UPDATE users SET mfa_secret = $1 WHERE id = $2', [secret, userId], function(err, res) {
+        if (err) return callback(err);
+        assert(res.rowCount === 1);
+        callback(null);
+    });
+}
+
 exports.validateUser = function(username, password, callback) {
     assert(username && password);
 
