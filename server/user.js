@@ -56,15 +56,17 @@ exports.register  = function(req, res, next) {
 exports.login = function(req, res, next) {
     var username = req.body.user.name;
     var password = req.body.user.password;
+    var otp = req.body.user.otp;
 
     if (username === '' || password === '') {
         return res.render('login', { warning: 'no username or password' });
     }
 
-    database.validateUser(username, password, function(err, userId) {
+    database.validateUser(username, password, otp, function(err, userId) {
         if (err) {
             if (err == 'NO_USER') return res.render('login',{ warning: 'Username does not exist' });
             if (err = 'WRONG_PASSWORD') return res.render('login', { warning: 'Invalid password' });
+            if (err == 'INVALID_OTP') return res.sender('login', { warning: 'Invalid one-time password' });
             return next(new Error('Unable to validate user, got: ' + err));
         }
         assert(userId);
@@ -333,6 +335,7 @@ exports.resetPassword = function(req, res, next) {
     assert(user);
     var password = req.body.old_password;
     var newPassword = req.body.password;
+    var otp = req.body.otp;
     var confirm = req.body.confirmation;
 
     if (!password) return  res.redirect('/security?err=enter your password');
@@ -342,9 +345,10 @@ exports.resetPassword = function(req, res, next) {
 
     if (newPassword !== confirm) return  res.redirect('/security?err=new password and confirmation should be the same.');
 
-    database.validateUser(user.username, password, function(err, userId) {
+    database.validateUser(user.username, password, otp, function(err, userId) {
         if (err) {
             if (err  === 'WRONG_PASSWORD') return  res.redirect('/security?err=wrong password.');
+            if (err === 'INVALID_OTP') return res.redirect('/security?err=invalid one-time password.');
             return next(new Error('Unable to reset password got ' + err));
         }
         assert(userId === user.id);
@@ -377,6 +381,7 @@ exports.addEmail = function(req, res, next) {
     user.deposit_address = lib.deriveAddress(user.id);
     var email = req.body.email;
     var password = req.body.password;
+    var otp = req.body.otp;
 
     var notValid = lib.isInvalidEmail(email);
     if (notValid) return res.redirect('/security?err=email invalid because: ' + notValid);
@@ -384,10 +389,12 @@ exports.addEmail = function(req, res, next) {
     notValid = lib.isInvalidPassword(password);
     if (notValid) return res.render('security?err=password not valid because: ' + notValid);
 
-    database.validateUser(user.username, password, function(err, userId) {
+    database.validateUser(user.username, password, otp, function(err, userId) {
         if (err) {
             if (err === 'WRONG_PASSWORD')
                 return res.redirect('/security?err=wrong%20password');
+            if (err === 'INVALID_OTP')
+                return res.redirect('/security?err=invalid%20one-time%20password');
             return next(new Error('Unable to validate user got ' + err));
         }
 
@@ -556,6 +563,7 @@ exports.handleWithdrawRequest = function(req, res, next) {
     var amount = req.body.amount;
     var destination = req.body.destination;
     var password = req.body.password;
+    var otp = req.body.otp;
 
     var r =  /^[1-9]\d*$/;
     if (!r.test(amount)) {
@@ -583,11 +591,13 @@ exports.handleWithdrawRequest = function(req, res, next) {
         return res.render('withdraw_request', { user: user, warning: 'Must enter a password' });
     }
 
-    database.validateUser(user.username, password, function(err) {
+    database.validateUser(user.username, password, otp, function(err) {
 
         if (err) {
             if (err === 'WRONG_PASSWORD')
                 return res.render('withdraw_request', { user: user, warning: 'wrong password, try it again...' });
+            if (err === 'INVALID_OTP')
+                return res.render('withdraw_request', { user: user, warning: 'invalid one-time password' });
             return next(new Error('Unable to validate user got ' + err));
         }
 

@@ -5,6 +5,7 @@ var async = require('async');
 var lib = require('./lib');
 var pg = require('pg');
 var passwordHash = require('password-hash');
+var speakeasy = require('speakeasy');
 
 var databaseUrl = process.env.DATABASE_URL;
 
@@ -201,10 +202,10 @@ exports.updateMfaSecret = function(userId, secret, callback) {
     });
 }
 
-exports.validateUser = function(username, password, callback) {
+exports.validateUser = function(username, password, otp, callback) {
     assert(username && password);
 
-    query('SELECT id, password FROM users WHERE lower(username) = lower($1)', [username], function (err, data) {
+    query('SELECT id, password, mfa_enabled, mfa_secret FROM users WHERE lower(username) = lower($1)', [username], function (err, data) {
         if (err) return callback(err);
 
         if (data.rows.length === 0) {
@@ -217,6 +218,14 @@ exports.validateUser = function(username, password, callback) {
         var verified = passwordHash.verify(password, user.password);
         if (!verified) {
             return callback('WRONG_PASSWORD');
+        }
+
+        if (user.mfa_enabled) {
+            var expected = speakeasy.totp({key: user.mfa_secret, encoding: 'base32'});
+
+            if (otp != expected) {
+                return callback('INVALID_OTP');
+            }
         }
 
         callback(null, user.id);
