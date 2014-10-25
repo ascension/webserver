@@ -95,6 +95,7 @@ module.exports = function(app) {
     app.get('/withdraw/request', restrict, user.withdrawRequest);
     app.get('/support', restrict, user.contact);
     app.get('/account', restrict, user.account);
+    app.get('/security', restrict, user.security);
     app.get('/delete-email', restrict, user.deleteEmail);
     app.get('/forgot-password', staticPageLogged('forgot-password'));
     app.get('/calculator', staticPageLogged('calculator'));

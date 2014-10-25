@@ -309,6 +309,13 @@ exports.account = function(req, res, next) {
     });
 };
 
+exports.security = function(req, res, next) {
+    var user = req.user;
+    assert(user);
+
+    res.render('security', {user: user});
+}
+
 exports.resetPassword = function(req, res, next) {
     var user = req.user;
     assert(user);
@@ -316,16 +323,16 @@ exports.resetPassword = function(req, res, next) {
     var newPassword = req.body.password;
     var confirm = req.body.confirmation;
 
-    if (!password) return  res.redirect('/account?err=enter your password');
+    if (!password) return  res.redirect('/security?err=enter your password');
 
     var notValid = lib.isInvalidPassword(newPassword);
-    if (notValid) return res.redirect('/account?err=new password not valid:' + notValid);
+    if (notValid) return res.redirect('/security?err=new password not valid:' + notValid);
 
-    if (newPassword !== confirm) return  res.redirect('/account?err=new password and confirmation should be the same.');
+    if (newPassword !== confirm) return  res.redirect('/security?err=new password and confirmation should be the same.');
 
     database.validateUser(user.username, password, function(err, userId) {
         if (err) {
-            if (err  === 'WRONG_PASSWORD') return  res.redirect('/account?err=wrong password.');
+            if (err  === 'WRONG_PASSWORD') return  res.redirect('/security?err=wrong password.');
             return next(new Error('Unable to reset password got ' + err));
         }
         assert(userId === user.id);
@@ -334,7 +341,7 @@ exports.resetPassword = function(req, res, next) {
                 return next(new Error('Unable to change user password got ' +  err));
             }
 
-           res.redirect('/account');
+           res.redirect('/security');
         });
     });
 };
@@ -342,13 +349,13 @@ exports.resetPassword = function(req, res, next) {
 exports.deleteEmail = function(req, res, next) {
     var user = req.user;
     assert(user);
-    if (user.email === null) res.redirect('/account');
+    if (user.email === null) res.redirect('/security');
 
     database.updateEmail(user.id, null, function(err) {
         if (err) {
             return next(new Error('Unable to delete email got ' + err));
         }
-        res.redirect('account');
+        res.redirect('security');
     });
 };
 
@@ -360,15 +367,15 @@ exports.addEmail = function(req, res, next) {
     var password = req.body.password;
 
     var notValid = lib.isInvalidEmail(email);
-    if (notValid) return res.redirect('/account?err=email invalid because: ' + notValid);
+    if (notValid) return res.redirect('/security?err=email invalid because: ' + notValid);
 
     notValid = lib.isInvalidPassword(password);
-    if (notValid) return res.render('account?err=password not valid because: ' + notValid);
+    if (notValid) return res.render('security?err=password not valid because: ' + notValid);
 
     database.validateUser(user.username, password, function(err, userId) {
         if (err) {
             if (err === 'WRONG_PASSWORD')
-                return res.redirect('/account?err=wrong%20password');
+                return res.redirect('/security?err=wrong%20password');
             return next(new Error('Unable to validate user got ' + err));
         }
 
@@ -377,7 +384,7 @@ exports.addEmail = function(req, res, next) {
                 console.error('[INTERNAL_ERROR] unable to update user email -> got error: ', err);
                 return next(new Error('Could not update email: ' + err));
             }
-            res.redirect('account');
+            res.redirect('security');
         });
     });
 };
