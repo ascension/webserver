@@ -52,6 +52,7 @@ define(['lib/react', 'lib/clib'], function(React, Clib) {
                         D.span(null, ' *** ' + message.message));
             break;
         default:
+            console.log('Unknown message type: ', message.type);
             break;
         }
     };
@@ -108,9 +109,9 @@ define(['lib/react', 'lib/clib'], function(React, Clib) {
         sendMessage: function(e) {
             if(e.keyCode == 13) {
                 var msg = this.refs.input.getDOMNode().value;
-                if(msg.length > 1 && msg.length < 500){
+                if(msg.length > 0 && msg.length <= 500){
                     this.props.engine.say(msg, function(error) {
-                        console.log('Error sending message', error); //TODO: handle error.
+                        console.log('Error sending message: ', error); //TODO: handle error.
                     });
                     this.refs.input.getDOMNode().value = '';
                 }

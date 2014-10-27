@@ -333,7 +333,7 @@ define(['lib/socket.io-1.1.0', 'lib/events', 'lib/lodash'], function(io, Events,
      * @param {string} msg - String containing the message, should be longer than 1 and shorter than 500.
      */
     Engine.prototype.say = function(msg) {
-        console.assert(msg.length > 1 && msg.length < 500);
+        console.assert(msg.length >= 1 && msg.length <= 500);
         this.ws.emit('say', msg);
     };
 

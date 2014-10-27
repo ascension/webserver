@@ -57,6 +57,7 @@
     font-size: 13px;
     color: #E6E6FF;
     font-weight: 600;
+    background-color: #DEFFFF;
     font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 }
 .msg-moderator-message span {
@@ -73,7 +74,7 @@
 }
 
 .msg-highlight-message {
-    background: #ADD8E6;
+    background: #FFFF66;
 }
 
 .msg-mute-message {

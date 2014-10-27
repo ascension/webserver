@@ -320,7 +320,8 @@ exports.security = function(req, res, next) {
     if (!user.mfa_secret) {
         user.mfa_secret = speakeasy.generate_key({length: 32}).base32;
         database.updateMfaSecret(user.id, user.mfa_secret, function(err) {
-            if (err) return next(new Error('Unable to update 2FA secret got ' + err));
+            if (err)
+                return next(new Error('Unable to update 2FA secret got ' + err));
         });
     }
 
@@ -409,47 +410,42 @@ exports.addEmail = function(req, res, next) {
 };
 
 exports.enableMfa = function(req, res, next) {
-    var user   = req.user,
-        secret = user.mfa_secret;
-    assert(user && secret);
+    var user   = req.user;
+    assert(user);
 
-    if (user.mfa_enabled) {
-        res.redirect('/security?err=2FA is already enabled');
-    }
+    if (user.mfa_secret)
+        return res.redirect('/security?err=2FA is already enabled');
 
-    var otp      = req.body.otp,
-        expected = speakeasy.totp({key: secret, encoding: 'base32'});
+    var secret = req.body.mfa_secret;
+    if (!secret || typeof secret !== 'string' || secret.length > 100)
+        return res.redirect('/security?err=request sent without secret');
+
+    var otp      = req.body.otp;
+    var expected = speakeasy.totp({key: secret, encoding: 'base32'});
     if (otp == expected) {
         database.updateMfaEnabled(user.id, true, function(err) {
             if (err) return next(new Error('Unable to update 2FA status got ' + err));
             res.redirect('/security');
         })
     } else {
+        // TODO: render using the same secret
         res.redirect('/security?err=invalid%20one-time%20password');
     }
-}
+};
 
 exports.disableMfa = function(req, res, next) {
-    var user   = req.user,
-        secret = user.mfa_secret;
-    assert(user && secret);
+    var user   = req.user;
+    var secret = user.mfa_secret;
+    assert(user);
 
-    if (!user.mfa_enabled) {
-        res.redirect('/security?err=2FA is not enabled');
+    if (!secret) {
+        return res.redirect('/security?err=2FA is not enabled');
     }
 
-    var otp      = req.body.otp,
-        expected = speakeasy.totp({key: secret, encoding: 'base32'});
+    var otp      = req.body.otp;
+    var expected = speakeasy.totp({key: secret, encoding: 'base32'});
     if (otp == expected) {
-        var tasks = [
-            function(callback) {
-                database.updateMfaEnabled(user.id, false, callback);
-            },
-            function(callback) {
-                database.updateMfaSecret(user.id, '', callback);
-            }
-        ]
-        async.parallel(tasks, function(err) {
+        database.updateMfaSecret(user.id, '', function(err) {
             if (err) return next(err);
             res.redirect('/security');
         })

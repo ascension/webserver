@@ -191,7 +191,7 @@ exports.updateMfaEnabled = function(userId, enabled, callback) {
         assert(res.rowCount === 1);
         callback(null);
     });
-}
+};
 
 exports.updateMfaSecret = function(userId, secret, callback) {
     assert(userId && typeof secret != 'undefined');
@@ -200,7 +200,7 @@ exports.updateMfaSecret = function(userId, secret, callback) {
         assert(res.rowCount === 1);
         callback(null);
     });
-}
+};
 
 exports.validateUser = function(username, password, otp, callback) {
     assert(username && password);
