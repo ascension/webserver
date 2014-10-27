@@ -1,0 +1,1 @@
+define(["../lib/multiline"],function(e){var t={custom:e(function(){}),martingale:e(function(){}),random:e(function(){}),blank:""};return t});
