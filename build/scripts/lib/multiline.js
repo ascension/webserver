@@ -1,0 +1,1 @@
+define([],function(){var e=/\/\*!?(?:\@preserve)?[ \t]*(?:\r\n|\n)([\s\S]*?)(?:\r\n|\n)\s*\*\//;return function(t){if(typeof t!="function")throw new TypeError("Expected a function");var n=e.exec(t.toString());if(!n)throw new TypeError("Multiline comment missing.");return n[1]}});
