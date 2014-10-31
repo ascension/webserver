@@ -90,6 +90,30 @@
                     <h5>{{#def.format:{n: it.user.net_profit, decimals:2} }} Bits</h5>
                 </div>
             </div>
+            
+            <hr>
+                <h5>Invest</h5>
+            <hr>
+            
+            <div id="statistics" class="row">
+                <div class="columns data large-3">
+                    <p><b>Deposits </b></p>
+                    <h5>{{#def.format:{n: it.user.deposits, decimals:1} }} bits</h5>
+                </div>
+                <div class="columns data large-3">
+                    <p><b>Withdrawals </b></p>
+                    <h5>{{#def.format:{n: it.user.withdrawals, decimals:1} }} bits</h5>
+                </div>
+                <div class="columns data large-3">
+                    <p><b>Bank Roll %</b></p>
+                    <h5>{{#def.format:{n: it.user.giveaways, decimals:2} }}</h5>
+                </div>
+                <div class="columns data large-3">
+                    <p><b>Net Profit</b></p>
+                    <h5>{{#def.format:{n: it.user.net_profit, decimals:2} }} Bits</h5>
+                </div>
+            </div>
+            
 
             <br>
             {{?typeof it.user.eligible !== 'number' }}
