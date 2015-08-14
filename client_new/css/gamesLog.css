@@ -131,6 +131,10 @@
     bottom: 4rem;
 }
 
+#games-log-container .games-log tr:nth-of-type(odd) {
+    background: #e58929;
+}
+
 #games-log-container .games-log tr:nth-of-type(even) {
     background: #f9f9f9;
 }
@@ -142,7 +146,7 @@
 
 #games-log-container .games-log tbody tr:hover {
     color: black;
-    background: rgba(255, 129, 0 , .4);
+    background: rgba(255, 129, 0 , .8);
 }
 
 #games-log-container .games-log a {
