@@ -78,11 +78,13 @@ body {
 }
 
 #controls-selector-container .controls-widget-container{
-    background-color: #181a1e;
+    /*background-color: #181a1e;*/
+    background-color: rgba(24, 26, 30, 0.8);
 }
 
 #controls-selector-container .button-holder.tab-active {
-    background-color: #181a1e;
+    /*background-color: #181a1e;*/
+    background-color: rgba(24, 26, 30, 0.8);
 }
 
 
@@ -156,7 +158,8 @@ body {
    ========================================================================== */
 
 #tabs-inner-container .widget-container {
-    background-color: #181a1e;
+    /*background-color: #181a1e;*/
+    background-color: rgba(24, 26, 30, 0.8);
 }
 
 #tabs-inner-container, #tabs-inner-container .log-chat-container {
@@ -273,6 +276,10 @@ body {
     color: #b0b3c1;
 }
 
+#players-container {
+
+    background-color: rgba(24, 26, 30, 0.8);
+}
 
 /* ==========================================================================
    gamesLog.css

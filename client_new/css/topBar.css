@@ -126,7 +126,7 @@
 }
 
 #top-bar .user-login .register a {
-
+    color: white;
 }
 
 #top-bar .user-login .login {
@@ -136,6 +136,7 @@
 }
 
 #top-bar .user-login .login a {
+    color: white;
     line-height: 2rem;
 
 }
