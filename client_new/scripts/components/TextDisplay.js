@@ -88,7 +88,7 @@ define([
                     if (StateLib.currentlyPlaying(Engine))
                         color = '#7cba00';
                     else
-                        color = (this.state.theme === 'white'? "black" : "#b0b3c1");
+                        color = (this.state.theme === 'white'? "white" : "#b0b3c1");
 
                     content = D.div({ id: cId, className: 'in-progress', style: { fontSize: this.state.size.inProgress, color: color } },
                         D.span(null, StateLib.getGamePayout(Engine).toFixed(2) + 'x')

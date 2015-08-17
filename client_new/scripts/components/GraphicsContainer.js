@@ -38,6 +38,8 @@ define([
         getInitialState: function () {
             var state = getState();
             state.nyan = false;
+            state.earth = false;
+            state.mars = false;
             return state;
         },
 
@@ -51,7 +53,9 @@ define([
                 game_crash: this._onChange,
                 game_starting: this._onChange,
                 lag_change: this._onChange,
-                nyan_cat_animation: this._onNyanAnim
+                nyan_cat_animation: this._onNyanAnim,
+                earth_animation: this._onEarthAnim,
+                mars_animation: this._onMarsAnim
             });
             GameSettingsStore.addChangeListener(this._onChange);
 
@@ -65,7 +69,9 @@ define([
                 game_crash: this._onChange,
                 game_starting: this._onChange,
                 lag_change: this._onChange,
-                nyan_cat_animation: this._onNyanAnim
+                nyan_cat_animation: this._onNyanAnim,
+                earth_animation: this._onEarthAnim,
+                mars_animation: this._onMarsAnim
             });
             GameSettingsStore.removeChangeListener(this._onChange);
 
@@ -75,7 +81,19 @@ define([
 
         _onChange: function() {
             if(this.state.nyan === true && Engine.gameState !== 'IN_PROGRESS')
+            {
                 this.setState({ nyan: false });
+            }
+
+            if(this.state.earth === true && Engine.gameState !== 'IN_PROGRESS')
+            {
+                this.setState({ earth: false });
+            }
+
+            if(this.state.mars === true && Engine.gameState !== 'IN_PROGRESS')
+            {
+                this.setState({ mars: false });
+            }
 
             var state = getState();
 
@@ -100,6 +118,14 @@ define([
             this.setState({ nyan: true });
         },
 
+        _onEarthAnim: function() {
+            this.setState({ earth: true });
+        },
+
+        _onMarsAnim: function() {
+            this.setState({ mars: true });
+        },
+
         render: function() {
             var textDisplay = (this.state.graphMode === 'text')?
                 TextDisplay() :
@@ -109,7 +135,14 @@ define([
                 D.div({ className: 'anim-cont' },
                     D.div({ className: 'nyan' + (this.state.nyan? ' show' : '') },
                         this.state.nyan? D.img({ src: 'img/nyan.gif' }) : null
+                    ),
+                    D.div({ className: 'earth' + (this.state.earth? ' show' : ' hide') },
+                       D.img({ src: 'img/earth.png' })
+                    ),
+                    D.div({ className: 'mars' + (this.state.mars? ' show' : ' hide') },
+                        D.img({ src: 'img/mars.svg' })
                     )
+
                 ),
                 D.div({ className: 'max-profit' },
                     'Max profit: ', (Engine.maxWin/1e8).toFixed(4), ' BTC'

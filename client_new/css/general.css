@@ -10,6 +10,7 @@ html, body {
     line-height: 20px;
     height: 100%;
     width: 100%;
+    z-index: 0;
     /* font-size: 20px; */
 }
 
@@ -31,7 +32,8 @@ a:hover {
     -o-transition: all 0.1s linear;
     -ms-transition: all 0.1s linear;
     transition: all 0.1s linear;
-    color: #c87629;
+    /*color: #c87629;*/
+    color: #e58929;
 }
 
 b {

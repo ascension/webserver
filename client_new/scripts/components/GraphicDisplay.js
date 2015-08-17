@@ -267,22 +267,22 @@ define([
             if (StateLib.currentlyPlaying(Engine))
                 this.ctx.fillStyle = '#7cba00';
             else
-                this.ctx.fillStyle = (this.themeWhite? "black" : "#b0b3c1");
+                this.ctx.fillStyle = (this.themeWhite? "white" : "#b0b3c1");
 
-            this.ctx.font = fontSizePx(20) + " Verdana";
+            this.ctx.font = fontSizePx(20) + " Maven Pro";
             this.ctx.fillText(parseFloat(this.currentGamePayout).toFixed(2) + 'x', this.canvasWidth/2, this.canvasHeight/2);
         }
 
         //If the engine enters in the room @ ENDED it doesn't have the crash value, so we don't display it
         if(Engine.gameState === 'ENDED') {
-            this.ctx.font = fontSizePx(15) + " Verdana";
+            this.ctx.font = fontSizePx(15) + " Maven Pro";
             this.ctx.fillStyle = "red";
             this.ctx.fillText('Busted', this.canvasWidth/2, this.canvasHeight/2 - fontSizeNum(15)/2);
             this.ctx.fillText('@ ' + Clib.formatDecimals(Engine.tableHistory[0].game_crash/100, 2) + 'x', this.canvasWidth/2, this.canvasHeight/2 + fontSizeNum(15)/2);
         }
 
         if(Engine.gameState === 'STARTING') {
-            this.ctx.font = fontSizePx(5) + " Verdana";
+            this.ctx.font = fontSizePx(5) + " Maven Pro";
             this.ctx.fillStyle = "grey";
 
             var timeLeft = ((Engine.startTime - Date.now())/1000).toFixed(1);

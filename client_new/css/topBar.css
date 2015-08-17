@@ -10,6 +10,7 @@
     background-color: #e58929;
     /*border-bottom: 1px solid #ddd;*/
     font-family: "Maven Pro", "Verlag A", "Verlag B", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    z-index: 2;
 }
 
 #top-bar .title {
@@ -48,6 +49,13 @@
     border: 2px solid grey;
     padding: 2px;
 }
+
+#top-bar .toggle-view a:hover {
+    color: #e58929;
+}
+
+
+
 @media handheld, only screen and (max-width: 767px) {
     
     #top-bar .toggle-view a {

@@ -72,7 +72,9 @@ define(['lib/key-mirror'], function(KeyMirror){
         },
 
         Animations: {
-            NYAN_CAT_TRIGGER_MS: 115129 //115129ms ~ 1000x // 11552ms ~ 2x
+            EARTH_TRIGGER_MS: 5776, //115129ms ~ 1000x // 11552ms ~ 2x
+            MARS_TRIGGER_MS: 11552, //115129ms ~ 1000x // 11552ms ~ 2x
+            NYAN_CAT_TRIGGER_MS: 115129, //115129ms ~ 1000x // 11552ms ~ 2x
         }
 
     }
