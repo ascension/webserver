@@ -4,6 +4,7 @@
     height: 100%;
     padding-top: 1.5rem;
     overflow-y: auto;
+    background-color: rgba(229, 137, 41, 0.8);
 }
 
 #players-container .header-bg {
@@ -12,7 +13,9 @@
     left: 0;
     position: absolute;
     top: 0;
-    background: #ddd;
+    /*background: #ddd;*/
+    background-color: rgba(229, 137, 41, 0.8);
+
 }
 
 #players-container table .th-inner {
@@ -27,7 +30,7 @@
     border-left: 1px solid rgba(0, 0, 0, 0.15);
     -webkit-box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.03);
     box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.03);
-    color: black;
+    color: #ffffff;
     font-weight: 600;
     padding-left: 10px;
     margin-left: -10px;

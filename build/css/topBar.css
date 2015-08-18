@@ -1,12 +1,16 @@
+@import url(http://fonts.googleapis.com/css?family=Maven+Pro:400,500,700,900);
+
+
 #top-bar {
     position: absolute;
     top: 0;
     right: 0;
     left: 0;
     height: 2rem;
-    background-color: white;
-    border-bottom: 1px solid #ddd;
-    font-family: "Verlag A", "Verlag B", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #e58929;
+    /*border-bottom: 1px solid #ddd;*/
+    font-family: "Maven Pro", "Verlag A", "Verlag B", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    z-index: 2;
 }
 
 #top-bar .title {
@@ -14,12 +18,12 @@
 }
 
 #top-bar .title h1 {
-    color: #e58929;
+    color: white;
     line-height: 2rem;
     font-size: 1.5rem;
     font-weight: bold;
     padding-left: 1rem;
-    font-family: "Courier New";
+    font-family: "Maven Pro";
 }
 
 #top-bar .user-login {
@@ -45,6 +49,13 @@
     border: 2px solid grey;
     padding: 2px;
 }
+
+#top-bar .toggle-view a:hover {
+    color: #e58929;
+}
+
+
+
 @media handheld, only screen and (max-width: 767px) {
     
     #top-bar .toggle-view a {
@@ -123,7 +134,7 @@
 }
 
 #top-bar .user-login .register a {
-
+    color: white;
 }
 
 #top-bar .user-login .login {
@@ -133,6 +144,7 @@
 }
 
 #top-bar .user-login .login a {
+    color: white;
     line-height: 2rem;
 
 }

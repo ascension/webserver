@@ -120,6 +120,8 @@ define([
 
         /** Animation Events triggers**/
         self.nyan = false;
+        self.earth = false;
+        self.mars = false;
 
         /**
          * Events triggered by the engine
@@ -205,6 +207,18 @@ define([
                 self.trigger('nyan_cat_animation');
             }
 
+            //Check for animation triggers
+            if(elapsed > AppConstants.Animations.EARTH_TRIGGER_MS && !self.earth) {
+                self.earth = true;
+                self.trigger('earth_animation');
+            }
+
+            //Check for animation triggers
+            if(elapsed > AppConstants.Animations.MARS_TRIGGER_MS && !self.mars) {
+                self.mars = true;
+                self.trigger('mars_animation');
+            }
+
         });
 
         /** Socket io errors */
@@ -268,6 +282,8 @@ define([
 
             //Clear Animation trigger flags
             self.nyan = false;
+            self.earth = false;
+            self.mars = false;
 
             self.trigger('game_crash', data);
         });

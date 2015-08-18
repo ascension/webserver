@@ -98,11 +98,11 @@ define([
                     )
                 ),
                 userLogin,
-                D.div({ className: 'toggle-view noselect' + ((this.state.theme === 'white')? ' black' : ' white'), onClick: this._toggleTheme },
-                    D.a(null,
-                        (this.state.theme === 'white')? 'Go black' : 'Go back'
-                    )
-                ),
+                //D.div({ className: 'toggle-view noselect' + ((this.state.theme === 'black') ? ' white' : ' black'), onClick: this._toggleTheme },
+                //    D.a(null,
+                //        (this.state.theme === 'white')? 'Go black' : 'Go back'
+                //    )
+                //),
                 D.div({ className: 'full-screen noselect', onClick: this._toggleFullScreen },
                 	 this.state.fullScreen? D.i({ className: 'fa fa-compress' }) : D.i({ className: 'fa fa-expand' })
             	)

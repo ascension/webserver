@@ -1,6 +1,7 @@
 @import url("general.css");
 @import url("../vendor/foundation/css/foundation.css"); /** The current theme of the page is based on foundation **/
 @import url("topBar.css");
+@import url("blackTheme.css");
 
 @font-face {
     font-family: rbn;

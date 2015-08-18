@@ -174,74 +174,74 @@ define([
             /* Avoid crashing the explorer if the cycle is infinite */
             if(i > 5000) {console.log("For 1 too long!");break;}
         }
-        this.ctx.stroke();
+        //this.ctx.stroke();
     };
 
     Graph.prototype.drawAxes = function() {
 
-        //Function to calculate the plotting values of the Axes
-        function stepValues(x) {
-            console.assert(_.isFinite(x));
-            var c = .4;
-            var r = .1;
-            while (true) {
+        ////Function to calculate the plotting values of the Axes
+        //function stepValues(x) {
+        //    console.assert(_.isFinite(x));
+        //    var c = .4;
+        //    var r = .1;
+        //    while (true) {
+        //
+        //        if (x <  c) return r;
+        //
+        //        c *= 5;
+        //        r *= 2;
+        //
+        //        if (x <  c) return r;
+        //        c *= 2;
+        //        r *= 5;
+        //    }
+        //}
+        //
+        ////Calculate Y Axis
+        //this.YAxisPlotMaxValue = this.YAxisPlotMinValue;
+        //this.payoutSeparation = stepValues(!this.currentGamePayout ? 1 : this.currentGamePayout);
+        //
+        //this.ctx.lineWidth=1;
+        //this.ctx.strokeStyle = (this.themeWhite? "Black" : "#b0b3c1");
+        //this.ctx.font="10px Verdana";
+        //this.ctx.fillStyle = (this.themeWhite? 'black' : "#b0b3c1");
+        //this.ctx.textAlign="center";
 
-                if (x <  c) return r;
-
-                c *= 5;
-                r *= 2;
-
-                if (x <  c) return r;
-                c *= 2;
-                r *= 5;
-            }
-        }
-
-        //Calculate Y Axis
-        this.YAxisPlotMaxValue = this.YAxisPlotMinValue;
-        this.payoutSeparation = stepValues(!this.currentGamePayout ? 1 : this.currentGamePayout);
-
-        this.ctx.lineWidth=1;
-        this.ctx.strokeStyle = (this.themeWhite? "Black" : "#b0b3c1");
-        this.ctx.font="10px Verdana";
-        this.ctx.fillStyle = (this.themeWhite? 'black' : "#b0b3c1");
-        this.ctx.textAlign="center";
-
-        //Draw Y Axis Values
-        var heightIncrement =  this.plotHeight/(this.YAxisPlotValue);
-        for(var payout = this.payoutSeparation, i = 0; payout < this.YAxisPlotValue; payout+= this.payoutSeparation, i++) {
-            var y = this.plotHeight - (payout*heightIncrement);
-            this.ctx.fillText((payout+1)+'x', 10, y);
-
-            this.ctx.beginPath();
-            this.ctx.moveTo(this.xStart, y);
-            this.ctx.lineTo(this.xStart+5, y);
-            this.ctx.stroke();
-
-            if(i > 100) { console.log("For 3 too long"); break; }
-        }
+        ////Draw Y Axis Values
+        //var heightIncrement =  this.plotHeight/(this.YAxisPlotValue);
+        //for(var payout = this.payoutSeparation, i = 0; payout < this.YAxisPlotValue; payout+= this.payoutSeparation, i++) {
+        //    var y = this.plotHeight - (payout*heightIncrement);
+        //    this.ctx.fillText((payout+1)+'x', 10, y);
+        //
+        //    this.ctx.beginPath();
+        //    this.ctx.moveTo(this.xStart, y);
+        //    this.ctx.lineTo(this.xStart+5, y);
+        //    this.ctx.stroke();
+        //
+        //    if(i > 100) { console.log("For 3 too long"); break; }
+        //}
 
         //Calculate X Axis
-        this.milisecondsSeparation = stepValues(this.XAxisPlotValue);
-        this.XAxisValuesSeparation = this.plotWidth / (this.XAxisPlotValue/this.milisecondsSeparation);
-
-        //Draw X Axis Values
-        for(var miliseconds = 0, counter = 0, i = 0; miliseconds < this.XAxisPlotValue; miliseconds+=this.milisecondsSeparation, counter++, i++) {
-            var seconds = miliseconds/1000;
-            var textWidth = this.ctx.measureText(seconds).width;
-            var x = (counter*this.XAxisValuesSeparation) + this.xStart;
-            this.ctx.fillText(seconds, x - textWidth/2, this.plotHeight + 11);
-
-            if(i > 100) { console.log("For 4 too long"); break; }
-        }
+        //this.milisecondsSeparation = stepValues(this.XAxisPlotValue);
+        //this.XAxisValuesSeparation = this.plotWidth / (this.XAxisPlotValue/this.milisecondsSeparation);
+        //
+        ////Draw X Axis Values
+        //for(var miliseconds = 0, counter = 0, i = 0; miliseconds < this.XAxisPlotValue; miliseconds+=this.milisecondsSeparation, counter++, i++) {
+        //    var seconds = miliseconds/1000;
+        //    var textWidth = this.ctx.measureText(seconds).width;
+        //    var x = (counter*this.XAxisValuesSeparation) + this.xStart;
+        //    this.ctx.fillText(seconds, x - textWidth/2, this.plotHeight + 11);
+        //
+        //    if(i > 100) { console.log("For 4 too long"); break; }
+        //}
 
         //Draw background Axis
-        this.ctx.lineWidth=1;
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.xStart, 0);
-        this.ctx.lineTo(this.xStart, this.canvasHeight - this.yStart);
-        this.ctx.lineTo(this.canvasWidth, this.canvasHeight - this.yStart);
-        this.ctx.stroke();
+        //this.ctx.lineWidth=1;
+        //this.ctx.beginPath();
+        //this.ctx.moveTo(this.xStart, 0);
+        //this.ctx.lineTo(this.xStart, this.canvasHeight - this.yStart);
+        //this.ctx.lineTo(this.canvasWidth, this.canvasHeight - this.yStart);
+        //this.ctx.stroke();
     };
 
 
@@ -275,9 +275,9 @@ define([
 
         //If the engine enters in the room @ ENDED it doesn't have the crash value, so we don't display it
         if(Engine.gameState === 'ENDED') {
-            this.ctx.font = fontSizePx(15) + " Maven Pro";
+            this.ctx.font = fontSizePx(12) + " Maven Pro";
             this.ctx.fillStyle = "red";
-            this.ctx.fillText('Busted', this.canvasWidth/2, this.canvasHeight/2 - fontSizeNum(15)/2);
+            this.ctx.fillText('Rocket Exploded', this.canvasWidth/2, this.canvasHeight/2 - fontSizeNum(15)/2);
             this.ctx.fillText('@ ' + Clib.formatDecimals(Engine.tableHistory[0].game_crash/100, 2) + 'x', this.canvasWidth/2, this.canvasHeight/2 + fontSizeNum(15)/2);
         }
 

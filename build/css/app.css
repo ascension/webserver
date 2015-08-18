@@ -1,6 +1,7 @@
 @import url("general.css");
 @import url("../vendor/foundation/css/foundation.css"); /** The current theme of the page is based on foundation **/
 @import url("topBar.css");
+@import url("blackTheme.css");
 
 @font-face {
     font-family: rbn;
@@ -11,6 +12,7 @@ body {
     font-family: Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     color: #000;
+    background-image: url("../img/stars.png");
     overflow-x: hidden;
 }
 
@@ -43,6 +45,11 @@ body {
 .page-content {
     position: relative;
     margin-top: 1rem;
+    color: white;
+}
+
+.page-content a {
+    color: #e58929;
 }
 
 #top-bar .menu, #top-bar .menu-mobile {
@@ -66,7 +73,7 @@ body {
 #top-bar .nav-item a {
     line-height: 40px;
 
-    color: black;
+    color: white;
     font-size: 20px;
 }
 
@@ -123,6 +130,7 @@ body {
     margin-top: 1.5rem;
     font-family: rbn;
     font-weight: bold;
+    color: white;
 }
 
 .index .faucet {
