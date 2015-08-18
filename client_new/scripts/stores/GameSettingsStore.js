@@ -16,7 +16,10 @@ define([
     var _themeFileName = '/css/' + (window.THEME_FILE_NAME || 'blackTheme.css'); //Global var sent by the server
 
     /** Theme **/
-    var _currentTheme = Clib.localOrDef('currentTheme', 'white'); //black || white
+    //var _currentTheme = Clib.localOrDef('currentTheme', 'black'); //black || white
+
+    // Override Localstorage and default to black theme
+    var _currentTheme = localStorage['currentTheme'] = 'black';
 
     /** Display Settings **/
     var _controlsSize = Clib.localOrDef('controlsSize', 'big'); //big || small
